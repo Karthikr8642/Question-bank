@@ -1,0 +1,56 @@
+from typing import List
+
+QUESTION_BANK = []
+YEAR_QUESTIONS_MAP = {}
+CONCEPTS_QUESTIONS_MAP = {}
+
+class QuestionBank:
+    def __init__(self, q_id: int, q_desc: str, years: List[int], concept: str) -> None:
+        self.q_id = q_id
+        self.q_desc = q_desc
+        self.years = years
+        self.concept = concept
+
+
+def get_question_by_year(year: int):
+    for q in QUESTION_BANK:
+        if year in YEAR_QUESTIONS_MAP:
+            YEAR_QUESTIONS_MAP[year].append(q.q_desc)
+        YEAR_QUESTIONS_MAP[year] = [q.q_desc]
+    print(YEAR_QUESTIONS_MAP)
+
+
+def get_max_questions_by_concept():
+    max_questions = 0
+    concept_with_max_questions = ''
+    for q in QUESTION_BANK:
+        if q.conept in CONCEPTS_QUESTIONS_MAP:
+            CONCEPTS_QUESTIONS_MAP[q.conept].append(q.q_desc)
+        CONCEPTS_QUESTIONS_MAP[q.conept] = [q.q_desc]
+    for k, v in CONCEPTS_QUESTIONS_MAP.items:
+        if v.length > max_questions:
+            max_questions = v.length
+            concept_with_max_questions = k
+    print(concept_with_max_questions)
+
+
+if __name__ == "__main__":
+    ip = int(input('Enter the number of questions you want to input: '))
+    for i in range(ip):
+        print()
+        id = input('Enter the question id: ')
+        desc = input('Enter the question: ')
+        years_string = input('Enter the years when the question appeared: (Eg. 2002 2004 2006)')
+        years_list = years_string.split()
+        concept = input('Enter the question concept: ')
+        new_question_bank = QuestionBank(q_id=id, q_desc=desc, years=years_list, concept=concept)
+        QUESTION_BANK.append(new_question_bank)
+    print(f'You have entered {len(QUESTION_BANK)} questions into question bank')
+    choice = int(input('Operation:\n1. get question by year\n2. get max questions by concept\n'))
+    if choice == 1:
+        year = int(input('Enter the year to get questions from that year: '))
+        get_question_by_year(year)
+    elif choice == 2:
+        get_max_questions_by_concept()
+    else:
+        print('invalid choice')
